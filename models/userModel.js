@@ -61,23 +61,9 @@ const userSchema = new mongoose.Schema({
 		default: 'user',
 		enum: ['user', 'admin', 'administrator', 'director']
 	},
-	companyId: {
-		type: String,
-		required: [true, 'Please provide a company id'],
-		validate: {
-			validator: function (val) {
-				return val.startsWith('C-');
-			},
-			message: 'Invalid UID: Organisation UID must start with C-'
-		}
-	},
 	image: {
 		type: String,
 		default: 'default.jpg'
-	},
-	country: {
-		type: String,
-		default: 'india'
 	},
 	userId: {
 		type: String,
@@ -86,36 +72,15 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now()
 	},
-	projects: {
-		type: [mongoose.Schema.Types.ObjectId],
-		ref: 'Project'
-	},
-	teams: {
-		type: [mongoose.Schema.Types.ObjectId],
-		ref: 'Team'
+	beauro: {
+		type: String,
+		required: true
 	}
 }, {
 	toJSON: { virtuals: true },
 	toObject: { virtuals: true }
 });
 // MONGOOSE MIDDLEWARES ->>
-
-
-
-// // eslint-disable-next-line prefer-arrow-callback
-// userSchema.pre(/^find/, async function (next) {
-	
-// 	// userSchema.virtual('teams', {	// <- This is virtual populate
-// 	// 	ref: 'Team',
-// 	// 	foreignField: 'members',
-// 	// 	localField: '_id'
-// 	// });
-	
-
-	
-
-// 	next();
-// })
 
 // Password encryption ->
 userSchema.pre('save', async function (next){	
